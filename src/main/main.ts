@@ -14,6 +14,9 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { createCounterNotification } from './notification';
+
+const isPrimary = app.requestSingleInstanceLock();
 
 export default class AppUpdater {
   constructor() {
@@ -23,13 +26,8 @@ export default class AppUpdater {
   }
 }
 
-let mainWindow: BrowserWindow | null = null;
-
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
-});
+// eslint-disable-next-line import/no-mutable-exports
+export let mainWindow: BrowserWindow | null = null;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -112,9 +110,14 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
-/**
- * Add event listeners...
- */
+app.setAsDefaultProtocolClient('myapp');
+
+app.on('open-url', (_event, url) => {
+  if (!mainWindow || mainWindow.isDestroyed()) {
+    return;
+  }
+  mainWindow.webContents.send('handle-uri', url);
+});
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
@@ -124,9 +127,22 @@ app.on('window-all-closed', () => {
   }
 });
 
+app.on('second-instance', (_event, argv) => {
+  if (!mainWindow || mainWindow.isDestroyed()) {
+    return;
+  }
+  const lastArg = argv[argv.length - 1];
+  if (lastArg) {
+    mainWindow.webContents.send('handle-uri', lastArg);
+  }
+});
+
 app
   .whenReady()
   .then(() => {
+    if (!isPrimary) {
+      app.quit();
+    }
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
@@ -135,3 +151,7 @@ app
     });
   })
   .catch(console.log);
+
+ipcMain.on('create-notification', async (_) => {
+  createCounterNotification(mainWindow);
+});

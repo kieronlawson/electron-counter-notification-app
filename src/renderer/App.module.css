@@ -1,0 +1,100 @@
+.app {
+  position: relative;
+  color: white;
+  height: 100vh;
+  background-color: #333333;
+  font-family: sans-serif;
+  overflow-y: hidden;
+  padding: 30px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.tasks {
+  background-color: #444444;
+  padding: 30px;
+}
+
+.task {
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.statusColumn {
+  min-width: 70px;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status.closed {
+  background-color: #b21010;
+}
+
+.status.open {
+  background-color: #17832a;
+}
+
+.id {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.button {
+  border-radius: 6px;
+  border: none;
+  background-color: #fff;
+  color: #333;
+  padding: 6px 12px;
+  font-size: 14px;
+  min-width: 100px;
+}
+
+.noTasks {
+  font-size: 24px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.buttonContainer {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.input {
+  padding: 6px;
+  border: none;
+  border-radius: 4px;
+  color: #333333;
+  font-size: 14px;
+  font-weight: 400;
+  width: 100%;
+}
