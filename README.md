@@ -1,3 +1,8 @@
+# A Basic Implementation of native Notifications including Windows Notification Action Buttons
+
+<p>This repo is a fork of electron-react-boilerplate. I have added a simple React component for triggering notifications and a way to react to notification action button clicks on macOS and Windows.<br><br>Read more on <a href="https://www.sipgate.de/blog/how-to-create-na…our-electron-app" target="_blank">my blog post</a></p>
+<p>Below you'll find the original README of electron-react-boilerplate.</p>
+<hr/>
 <img src=".erb/img/erb-banner.svg" width="100%" />
 
 <br>
