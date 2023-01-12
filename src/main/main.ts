@@ -110,7 +110,7 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
-app.setAsDefaultProtocolClient('myapp');
+app.setAsDefaultProtocolClient('spoke');
 
 app.on('open-url', (_event, url) => {
   if (!mainWindow || mainWindow.isDestroyed()) {
